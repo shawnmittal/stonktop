@@ -27,10 +27,10 @@ class Stock(object):
         return f"{self.stock_ticker} - {self.company_name}"
 
     def is_up(self):
-        return self.state == "UP"
+        return self.state == "GAIN"
 
     def is_down(self):
-        return self.state == "DOWN"
+        return self.state == "LOSS"
 
 
 class Portfolio(object):
@@ -46,15 +46,15 @@ class Portfolio(object):
             #TODO: Replace random info with yfinance information
             stock = {"COMPANY_NAME": "temp",
                      "STOCK_TICKER": ticker,
-                     "REAL_TIME_PRICE": randint(0, 100),
-                     "PREVIOUS_CLOSE": randint(0, 100),
-                     "OPEN": randint(0, 100),
-                     "FIFTY_TWO_WEEK_RANGE": randint(0, 100),
-                     "VOLUME": randint(0, 100),
-                     "AVERAGE_VOLUME": randint(0, 100),
-                     "MARKET_CAP": randint(0, 100),
-                     "PE_RATIO": randint(0, 100),
-                     "STATE": "up"}
+                     "REAL_TIME_PRICE": str(randint(0, 100)),
+                     "PREVIOUS_CLOSE": str(randint(0, 100)),
+                     "OPEN": str(randint(0, 100)),
+                     "FIFTY_TWO_WEEK_RANGE": str(randint(0, 100)),
+                     "VOLUME": str(randint(0, 100)),
+                     "AVERAGE_VOLUME": str(randint(0, 100)),
+                     "MARKET_CAP": str(randint(0, 100)),
+                     "PE_RATIO": str(randint(0, 100)),
+                     "STATE": "gain"}
 
             stocks.append(Stock(stock))
         
@@ -106,8 +106,8 @@ class SelectableColumns(urwid.Columns):
 class StockWidget(urwid.WidgetWrap):
 
     STATE_ATTR_MAPPING = {
-        "UP": {None: "up"},
-        "DOWN": {None: "down"}
+        "gain": {None: "gain"},
+        "loss": {None: "loss"}
     }
 
     def __init__(self, stock):
@@ -164,8 +164,8 @@ class StockWidget(urwid.WidgetWrap):
         self._w.set_focus_map(
             {
                 None: attr,
-                "up": attr,
-                "down": attr,
+                "gain": attr,
+                "loss": attr,
             }
         )
 
@@ -244,7 +244,7 @@ class PortfolioListWidget(urwid.WidgetWrap):
         indices = [idx for idx, w in enumerate(self.walker) if w.is_selected()]
         return indices
 
-    def _focus_changed(self):
+    def _focus_changed(self, idx):
         urwid.emit_signal(self, "focus_changed")
 
     def render(self, size, focus=False):
@@ -303,7 +303,7 @@ class PortfolioView(object):
         if stock_idx is None:
             return None
         else:
-            return self.stock[stock_idx]
+            return self.stocks[stock_idx]
 
     def refresh(self):
         self.stocks = self.portfolio._get_stocks()
@@ -367,8 +367,8 @@ class StonkWidget(urwid.WidgetWrap):
 class StonkApp(object):
 
     palette = [ 
-        ("up", "light green", ""),
-        ("down", "light red", ""),
+        ("gain", "light green", ""),
+        ("loss", "light red", ""),
         ("bold", "bold", ""),
         ("underline", "underline", ""),
         ("highlight", "black", "yellow", ""),
