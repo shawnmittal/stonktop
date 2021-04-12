@@ -5,7 +5,8 @@ from typing import OrderedDict
 from random import randint
 from datetime import datetime
 
-UPDATE_INTERVAL = 1
+UPDATE_TIME_INTERVAL = 1
+UPDATE_STOCK_INTERVAL = 5
 
 class Stock(object):
     def __init__(self, d: dict):
@@ -192,26 +193,28 @@ class PortfolioListWidget(urwid.WidgetWrap):
 
     column_widths = [
         (5,),
-        (5,),
-        (5,),
-        (5,),
-        (5,),
-        (5,),
-        (5,),
-        (5,),
-        (5,),
-        (5,),
+        (15,),
+        (10,),
+        (10,),
+        (10,),
+        (10,),
+        (10,),
+        (15,),
+        (15,),
+        (15,),
+        (15,),
     ]
 
     def __init__(self):
 
         column_labels = [
+            "",
             "Name",
             "Ticker",
             "Current",
-            "Prev. Close",
+            "Close",
             "Open",
-            "52 Week Range",
+            "Latest",
             "Volume",
             "Avg. Volume",
             "Market Cap",
@@ -389,7 +392,9 @@ class StonkApp(object):
         )
 
     def run(self):
-        self.register_refresh()
+        self.w.refresh_stocks()
+        self.register_time_refresh()
+        self.register_stock_refresh()
         self.loop.run()
 
     def exit_on_q(self, key):
@@ -398,11 +403,17 @@ class StonkApp(object):
 
     def refresh_time(self, loop, user_data):
         self.w.update_time()
-        self.w.refresh_stocks()
-        self.register_refresh()
+        self.register_time_refresh()
 
-    def register_refresh(self):
-        self.loop.set_alarm_in(UPDATE_INTERVAL, self.refresh_time)
+    def register_time_refresh(self):
+        self.loop.set_alarm_in(UPDATE_TIME_INTERVAL, self.refresh_time)
+
+    def refresh_stock(self, loop, user_data):
+        self.w.refresh_stocks()
+        self.register_stock_refresh()
+
+    def register_stock_refresh(self):
+        self.loop.set_alarm_in(UPDATE_STOCK_INTERVAL, self.refresh_stock)
 
 
 def cli():
