@@ -30,7 +30,7 @@ class Stock(object):
         return self.state == "UP"
 
     def is_down(self):
-        return self.state == "PENDING"
+        return self.state == "DOWN"
 
 
 class Portfolio(object):
@@ -152,6 +152,8 @@ class StockWidget(urwid.WidgetWrap):
         self.columns["market_cap"].set_text(stock.market_cap)
         self.columns["pe_ratio"].set_text(stock.pe_ratio)
         self.columns["state"]._original_widget.set_text(stock.state.title())
+
+        self.columns["state"].set_attr_map(self.STATE_ATTR_MAPPING[stock.state])
 
     def set_selected_attr(self, in_focus):
         if in_focus:
@@ -295,8 +297,16 @@ class PortfolioView(object):
         stocks_widgets = [StockWidget(s) for s in stocks]
         return stocks_widgets
 
+    def get_focus_stock(self):
+        stock_idx = self.panel.get_focused_stock_idx()
+
+        if stock_idx is None:
+            return None
+        else:
+            return self.stock[stock_idx]
+
     def refresh(self):
-        self.stocks = self.portfolio.stocks
+        self.stocks = self.portfolio._get_stocks()
 
         stock_widgets_ordered = []
         stock_widgets_dict = {}
@@ -352,7 +362,7 @@ class StonkWidget(urwid.WidgetWrap):
         self.header_time.set_text(time)
 
     def refresh_stocks(self):
-        self.portofolio_view.refresh()
+        self.portfolio_view.refresh()
 
 class StonkApp(object):
 
@@ -379,17 +389,8 @@ class StonkApp(object):
         )
 
     def run(self):
-        ESC = "\x1b"
-        SWITCH_TO_ALTERNATE_BUFFER = ESC + "7" + ESC + "[?1049h"
-        RESTORE_NORMAL_BUFFER = ESC + "[?1049l" + ESC + "8"
-
-        self.loop.screen.write(SWITCH_TO_ALTERNATE_BUFFER)
-        try:
-            self.loop.run()
-        except KeyboardInterrupt:
-            pass
-        finally:
-            self.loop.screen.write(RESTORE_NORMAL_BUFFER)
+        self.register_refresh()
+        self.loop.run()
 
     def exit_on_q(self, key):
         if key in ("q", "Q"):
