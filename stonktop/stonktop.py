@@ -1,12 +1,14 @@
 import urwid
 import sys
-#import yfinance as yf
+
+# import yfinance as yf
 from typing import OrderedDict
 from random import randint
 from datetime import datetime
 
 UPDATE_TIME_INTERVAL = 1
 UPDATE_STOCK_INTERVAL = 5
+
 
 class Stock(object):
     def __init__(self, d: dict):
@@ -35,7 +37,7 @@ class Stock(object):
 
 
 class Portfolio(object):
-    def __init__(self, tickers = ['AAPL', 'GOOG', 'MSFT']):
+    def __init__(self, tickers=["AAPL", "GOOG", "MSFT"]):
         super().__init__()
         self.tickers = tickers
         self.stocks = self._get_stocks()
@@ -44,21 +46,23 @@ class Portfolio(object):
         stocks = []
 
         for ticker in self.tickers:
-            #TODO: Replace random info with yfinance information
-            stock = {"COMPANY_NAME": "temp",
-                     "STOCK_TICKER": ticker,
-                     "REAL_TIME_PRICE": str(randint(0, 100)),
-                     "PREVIOUS_CLOSE": str(randint(0, 100)),
-                     "OPEN": str(randint(0, 100)),
-                     "FIFTY_TWO_WEEK_RANGE": str(randint(0, 100)),
-                     "VOLUME": str(randint(0, 100)),
-                     "AVERAGE_VOLUME": str(randint(0, 100)),
-                     "MARKET_CAP": str(randint(0, 100)),
-                     "PE_RATIO": str(randint(0, 100)),
-                     "STATE": "loss"}
+            # TODO: Replace random info with yfinance information
+            stock = {
+                "COMPANY_NAME": "temp",
+                "STOCK_TICKER": ticker,
+                "REAL_TIME_PRICE": str(randint(0, 100)),
+                "PREVIOUS_CLOSE": str(randint(0, 100)),
+                "OPEN": str(randint(0, 100)),
+                "FIFTY_TWO_WEEK_RANGE": str(randint(0, 100)),
+                "VOLUME": str(randint(0, 100)),
+                "AVERAGE_VOLUME": str(randint(0, 100)),
+                "MARKET_CAP": str(randint(0, 100)),
+                "PE_RATIO": str(randint(0, 100)),
+                "STATE": "loss",
+            }
 
             stocks.append(Stock(stock))
-        
+
         return stocks
 
 
@@ -106,10 +110,7 @@ class SelectableColumns(urwid.Columns):
 
 class StockWidget(urwid.WidgetWrap):
 
-    STATE_ATTR_MAPPING = {
-        "gain": {None: "gain"},
-        "loss": {None: "loss"}
-    }
+    STATE_ATTR_MAPPING = {"gain": {None: "gain"}, "loss": {None: "loss"}}
 
     def __init__(self, stock):
         self.columns = OrderedDict()
@@ -128,14 +129,16 @@ class StockWidget(urwid.WidgetWrap):
 
         self.update_values(stock)
 
-        w = SelectableColumns([ 
-            (*weight, urwid.Padding(c))
-            for weight, c in zip(
-                PortfolioListWidget.column_widths, self.columns.values()
-            )
-        ])
+        w = SelectableColumns(
+            [
+                (*weight, urwid.Padding(c))
+                for weight, c in zip(
+                    PortfolioListWidget.column_widths, self.columns.values()
+                )
+            ]
+        )
 
-        w = urwid.AttrMap(w, None) # Details handled by PortfolioListWidget
+        w = urwid.AttrMap(w, None)  # Details handled by PortfolioListWidget
 
         self.selected = False
 
@@ -224,7 +227,10 @@ class PortfolioListWidget(urwid.WidgetWrap):
         ]
 
         header_w = [
-            (*weight, urwid.Padding(urwid.Text(c, wrap="ellipsis")),)
+            (
+                *weight,
+                urwid.Padding(urwid.Text(c, wrap="ellipsis")),
+            )
             for c, weight in zip(column_labels, self.column_widths)
         ]
         header_w = urwid.Columns(header_w)
@@ -264,14 +270,13 @@ class PortfolioViewWidget(urwid.WidgetWrap):
     def __init__(self):
         self.panel = PortfolioListWidget()
 
-        w = urwid.Columns(
-            [("weight", 80, self.panel)]
-        )
+        w = urwid.Columns([("weight", 80, self.panel)])
 
         super().__init__(w)
 
     def keypress(self, size, key):
         return super().keypress(size, key)
+
 
 class PortfolioView(object):
     def __init__(self, portfolio):
@@ -314,7 +319,7 @@ class PortfolioView(object):
         self.stocks = self.portfolio._get_stocks()
 
         stock_widgets_ordered = []
-        stock_widgets_dict = {} #TODO: Currently not using stock dict.
+        stock_widgets_dict = {}  # TODO: Currently not using stock dict.
         for stock in self.stocks:
             try:
                 w = self.stock_widgets_dict[stock.stock_ticker]
@@ -331,6 +336,7 @@ class PortfolioView(object):
 
     def get_view(self):
         return self.view_placeholder
+
 
 class StonkWidget(urwid.WidgetWrap):
     def __init__(self, portfolio):
@@ -370,9 +376,10 @@ class StonkWidget(urwid.WidgetWrap):
     def refresh_stocks(self):
         self.portfolio_view.refresh()
 
+
 class StonkApp(object):
 
-    palette = [ 
+    palette = [
         ("portfolio_name", "dark magenta", ""),
         ("gain", "light green", ""),
         ("loss", "light red", ""),
@@ -383,7 +390,7 @@ class StonkApp(object):
     ]
 
     def __init__(self, args):
-        #TODO: add additional arguments that StonkTop can be called with
+        # TODO: add additional arguments that StonkTop can be called with
 
         super().__init__()
 
@@ -392,7 +399,9 @@ class StonkApp(object):
         self.w = StonkWidget(self.portfolio)
 
         self.loop = urwid.MainLoop(
-            self.w, self.palette, unhandled_input=self.exit_on_q,
+            self.w,
+            self.palette,
+            unhandled_input=self.exit_on_q,
         )
 
     def run(self):
@@ -423,5 +432,6 @@ class StonkApp(object):
 def cli():
     StonkApp("TODO").run()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     cli()
