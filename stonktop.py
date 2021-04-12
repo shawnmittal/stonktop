@@ -55,7 +55,7 @@ class Portfolio(object):
                      "AVERAGE_VOLUME": str(randint(0, 100)),
                      "MARKET_CAP": str(randint(0, 100)),
                      "PE_RATIO": str(randint(0, 100)),
-                     "STATE": "gain"}
+                     "STATE": "loss"}
 
             stocks.append(Stock(stock))
         
@@ -192,17 +192,18 @@ class PortfolioListWidget(urwid.WidgetWrap):
     signals = ["focus_changed"]
 
     column_widths = [
+        (2,),
+        (15,),
+        (10,),
+        (10,),
+        (10,),
+        (10,),
+        (10,),
+        (15,),
+        (15,),
+        (15,),
+        (15,),
         (5,),
-        (15,),
-        (10,),
-        (10,),
-        (10,),
-        (10,),
-        (10,),
-        (15,),
-        (15,),
-        (15,),
-        (15,),
     ]
 
     def __init__(self):
@@ -219,6 +220,7 @@ class PortfolioListWidget(urwid.WidgetWrap):
             "Avg. Volume",
             "Market Cap",
             "PE Ratio",
+            "State",
         ]
 
         header_w = [
@@ -312,7 +314,7 @@ class PortfolioView(object):
         self.stocks = self.portfolio._get_stocks()
 
         stock_widgets_ordered = []
-        stock_widgets_dict = {}
+        stock_widgets_dict = {} #TODO: Currently not using stock dict.
         for stock in self.stocks:
             try:
                 w = self.stock_widgets_dict[stock.stock_ticker]
@@ -346,10 +348,11 @@ class StonkWidget(urwid.WidgetWrap):
             ]
         )
         header = urwid.AttrMap(header, "bold")
+        footer = urwid.Text("[q]: quit  [space]: select  [k]: up  [j]: down")
 
         self.portfolio_view = PortfolioView(self.portfolio)
 
-        self.view = urwid.Frame(self.portfolio_view.get_view(), header)
+        self.view = urwid.Frame(self.portfolio_view.get_view(), header, footer)
 
         self.view_placeholder = urwid.WidgetPlaceholder(self.view)
 
@@ -357,7 +360,7 @@ class StonkWidget(urwid.WidgetWrap):
 
     def set_name(self, portfolio_name):
         self.header_portfolio_name.set_text(
-            [(None, "Portfolio:"), ("magenta", portfolio_name)]
+            [(None, "Portfolio:"), ("portfolio_name", portfolio_name)]
         )
 
     def update_time(self):
@@ -370,6 +373,7 @@ class StonkWidget(urwid.WidgetWrap):
 class StonkApp(object):
 
     palette = [ 
+        ("portfolio_name", "dark magenta", ""),
         ("gain", "light green", ""),
         ("loss", "light red", ""),
         ("bold", "bold", ""),
