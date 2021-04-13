@@ -10,6 +10,8 @@ Data structures heavily lifted from [stui](https://github.com/mil-ad/stui), a Sl
 - Add portfolio config file to maintain persistance
 - Add pop-up that allows adding tickers
 - Add ability to delete stocks
+- Add ability to sort by columns
+- Update state based on gain/loss
 
 ## Fixes:
 - Change focus to be at the top most stock widget, not bottom
