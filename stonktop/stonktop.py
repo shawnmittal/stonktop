@@ -1,6 +1,7 @@
 import urwid
 import sys
-import basestructures
+import base_structures
+import util_widgets
 
 # import yfinance as yf
 from typing import OrderedDict
@@ -8,49 +9,6 @@ from datetime import datetime
 
 UPDATE_TIME_INTERVAL = 1
 UPDATE_STOCK_INTERVAL = 5
-
-
-class FancyListBox(urwid.ListBox):
-    def keypress(self, size, key):
-        if key in ("j", "down"):
-            return super().keypress(size, "down")
-        if key in ("k", "up"):
-            return super().keypress(size, "up")
-        else:
-            return super().keypress(size, key)
-
-
-class FancyLineBox(urwid.LineBox):
-    def __init__(self, original_widget, title=""):
-
-        original_widget = urwid.Padding(original_widget, left=1, right=1)
-        # FIXME: I don't know why I should pass height here
-        # original_widget = urwid.Filler(
-        #     original_widget, height=("relative", 100), top=1, bottom=0
-        # )
-
-        super().__init__(
-            original_widget,
-            title,
-            title_align="left",
-            tline="─",
-            trcorner="╮",
-            tlcorner="╭",
-            bline="─",
-            blcorner="╰",
-            brcorner="╯",
-            lline="│",
-            rline="│",
-        )
-
-
-class SelectableColumns(urwid.Columns):
-    def selectable(self):
-        return True
-
-    def keypress(self, size, key):
-        return super().keypress(size, key)
-
 
 class StockWidget(urwid.WidgetWrap):
 
@@ -73,7 +31,7 @@ class StockWidget(urwid.WidgetWrap):
 
         self.update_values(stock)
 
-        w = SelectableColumns(
+        w = util_widgets.SelectableColumns(
             [
                 (*weight, urwid.Padding(c))
                 for weight, c in zip(
@@ -180,9 +138,9 @@ class PortfolioListWidget(urwid.WidgetWrap):
         header_w = urwid.Columns(header_w)
 
         self.walker = urwid.SimpleFocusListWalker([])
-        w = FancyListBox(self.walker)
+        w = util_widgets.FancyListBox(self.walker)
         w = urwid.Frame(w, header_w)
-        w = FancyLineBox(w, "Portfolio")
+        w = util_widgets.FancyLineBox(w, "Portfolio")
 
         self.walker.set_focus_changed_callback(self._focus_changed)
 
@@ -338,7 +296,7 @@ class StonkApp(object):
 
         super().__init__()
 
-        self.portfolio = basestructures.Portfolio()
+        self.portfolio = base_structures.Portfolio()
 
         self.w = StonkWidget(self.portfolio)
 
