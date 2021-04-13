@@ -1,5 +1,6 @@
 from random import randint
 
+
 class Stock(object):
     def __init__(self, d: dict):
         super().__init__()

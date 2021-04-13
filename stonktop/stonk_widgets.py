@@ -10,6 +10,7 @@ from datetime import datetime
 UPDATE_TIME_INTERVAL = 1
 UPDATE_STOCK_INTERVAL = 5
 
+
 class StockWidget(urwid.WidgetWrap):
 
     STATE_ATTR_MAPPING = {"gain": {None: "gain"}, "loss": {None: "loss"}}
@@ -240,6 +241,7 @@ class PortfolioView(object):
         return self.view_placeholder
 
 
+# TODO: should probably rename this to avoid confusion with StockWidget
 class StonkWidget(urwid.WidgetWrap):
     def __init__(self, portfolio):
 
@@ -329,11 +331,3 @@ class StonkApp(object):
 
     def register_stock_refresh(self):
         self.loop.set_alarm_in(UPDATE_STOCK_INTERVAL, self.refresh_stock)
-
-
-def cli():
-    StonkApp("TODO").run()
-
-
-if __name__ == "__main__":
-    cli()

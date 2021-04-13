@@ -15,8 +15,8 @@ setup(
     author="Shawn Mittal",
     url="https://github.com/shawnmittal/stonktop",
     keywords=["stonks", "cash", "money"],
-    author_email="shawn@shawnmittal.com,
+    author_email="shawn@shawnmittal.com",
     install_requires=["urwid", "yfinance"],
     python_requires=">=3.6",
-    entry_points={"console_scripts": ["stonktop=stonktop.stonktop:cli",]},
+    entry_points={"console_scripts": ["stonktop=stonktop.cli:cli",]},
 )

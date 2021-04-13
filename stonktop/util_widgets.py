@@ -1,5 +1,6 @@
 import urwid
 
+
 class FancyListBox(urwid.ListBox):
     def keypress(self, size, key):
         if key in ("j", "down"):
