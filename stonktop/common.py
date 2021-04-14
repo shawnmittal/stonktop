@@ -6,10 +6,8 @@ from datetime import datetime
 from random import randint
 
 
-class Stock(object):
+class Stock:
     def __init__(self, d: dict):
-        super().__init__()
-
         self.company_name = d["COMPANY_NAME"]
         self.stock_ticker = d["STOCK_TICKER"]
         self.real_time_price = d["REAL_TIME_PRICE"]
@@ -26,9 +24,8 @@ class Stock(object):
         return f"{self.stock_ticker} - {self.company_name}"
 
 
-class Portfolio(object):
+class Portfolio:
     def __init__(self, config_path=Path.cwd().parent / "tests/config.json"):
-        super().__init__()
         self.config_path = config_path
         self.data = self._read_config()
         self.tickers = self.data.keys()
@@ -52,32 +49,29 @@ class Portfolio(object):
                 stock = {
                     "COMPANY_NAME": temp["longName"],
                     "STOCK_TICKER": temp["symbol"],
-                    "REAL_TIME_PRICE": str(yf_obj.history(period="1d")["Close"][0]),
-                    "PREVIOUS_CLOSE": str(temp["previousClose"]),
-                    "OPEN": str(temp["open"]),
-                    "FIFTY_TWO_WEEK_RANGE": f"{temp['fiftyTwoWeekLow']}, {temp['fiftyTwoWeekHigh']}",
-                    "VOLUME": str(temp["volume"]),  # TODO: fix to be live volume
-                    "AVERAGE_VOLUME": str(temp["averageVolume"]),
-                    "MARKET_CAP": str(temp["marketCap"]),
-                    "PE_RATIO": str(
-                        self.data[ticker]["PE_RATIO"]
-                    ),  # TODO: figure out how to get PE ratio
+                    "REAL_TIME_PRICE": f'${yf_obj.history(period="1d")["Close"][0]:>.2f}',
+                    "PREVIOUS_CLOSE": f'${temp["previousClose"]:>.2f}',
+                    "OPEN": f'${temp["open"]:>.2f}',
+                    "FIFTY_TWO_WEEK_RANGE": f"(${temp['fiftyTwoWeekLow']:>.2f}, ${temp['fiftyTwoWeekHigh']:>.2f})",
+                    "VOLUME": f'{temp["volume"]}',  # TODO: fix to be live volume
+                    "AVERAGE_VOLUME": f'{temp["averageVolume"]}',
+                    "MARKET_CAP": f'${temp["marketCap"]}',
+                    "PE_RATIO": f'{self.data[ticker]["PE_RATIO"]:>.2f}',
+                    # TODO: figure out how to get PE ratio
                     "STATE": "loss",  # TODO: change state to update based on price change
                 }
             else:
                 stock = {
                     "COMPANY_NAME": self.data[ticker]["COMPANY_NAME"],
                     "STOCK_TICKER": self.data[ticker]["STOCK_TICKER"],
-                    "REAL_TIME_PRICE": str(self.data[ticker]["REAL_TIME_PRICE"]),
-                    "PREVIOUS_CLOSE": str(self.data[ticker]["PREVIOUS_CLOSE"]),
-                    "OPEN": str(self.data[ticker]["OPEN"]),
-                    "FIFTY_TWO_WEEK_RANGE": str(
-                        self.data[ticker]["FIFTY_TWO_WEEK_RANGE"]
-                    ),
-                    "VOLUME": str(self.data[ticker]["VOLUME"]),
-                    "AVERAGE_VOLUME": str(self.data[ticker]["AVERAGE_VOLUME"]),
-                    "MARKET_CAP": str(self.data[ticker]["MARKET_CAP"]),
-                    "PE_RATIO": str(self.data[ticker]["PE_RATIO"]),
+                    "REAL_TIME_PRICE": f'${self.data[ticker]["REAL_TIME_PRICE"]:>.2f}',
+                    "PREVIOUS_CLOSE": f'${self.data[ticker]["PREVIOUS_CLOSE"]:>.2f}',
+                    "OPEN": f'${self.data[ticker]["OPEN"]:>.2f}',
+                    "FIFTY_TWO_WEEK_RANGE": f'{self.data[ticker]["FIFTY_TWO_WEEK_RANGE"]:>.2f}',
+                    "VOLUME": f'{self.data[ticker]["VOLUME"]}',
+                    "AVERAGE_VOLUME": f'{self.data[ticker]["AVERAGE_VOLUME"]}',
+                    "MARKET_CAP": f'${self.data[ticker]["MARKET_CAP"]}',
+                    "PE_RATIO": f'{self.data[ticker]["PE_RATIO"]:>.2f}',
                     "STATE": "loss",  # TODO: change state to update based on price change
                 }
 
@@ -103,7 +97,7 @@ class Portfolio(object):
     def update_price_and_volume(self):
         for stock in self.stocks:
             yf_obj = yf.Ticker(stock.stock_ticker)
-            stock.real_time_price = str(yf_obj.history(period="1d")["Close"][0])
+            stock.real_time_price = f'${yf_obj.history(period="1d")["Close"][0]:>.2f}'
             # stock.volume = str(randint(0, 100))
 
         return self.stocks

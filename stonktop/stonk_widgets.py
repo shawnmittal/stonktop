@@ -100,16 +100,16 @@ class PortfolioListWidget(urwid.WidgetWrap):
 
     column_widths = [
         (2,),
-        (15,),
+        (18,),
+        (8,),
         (10,),
         (10,),
         (10,),
-        (10,),
-        (10,),
-        (15,),
-        (15,),
-        (15,),
-        (15,),
+        (22,),
+        (11,),
+        (13,),
+        (16,),
+        (9,),
         (5,),
     ]
 
@@ -182,10 +182,8 @@ class PortfolioViewWidget(urwid.WidgetWrap):
         return super().keypress(size, key)
 
 
-class PortfolioView(object):
+class PortfolioView:
     def __init__(self, portfolio):
-        super().__init__()
-
         self.portfolio = portfolio
 
         self.view = PortfolioViewWidget()
@@ -282,7 +280,7 @@ class StonkWidget(urwid.WidgetWrap):
         self.portfolio_view.refresh()
 
 
-class StonkApp(object):
+class StonkApp:
 
     palette = [
         ("portfolio_name", "dark magenta", ""),
@@ -296,9 +294,6 @@ class StonkApp(object):
 
     def __init__(self, args):
         # TODO: add additional arguments that StonkTop can be called with
-
-        super().__init__()
-
         self.portfolio = common.Portfolio()
 
         self.w = StonkWidget(self.portfolio)
