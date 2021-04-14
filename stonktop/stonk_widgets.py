@@ -1,14 +1,15 @@
 import urwid
 import sys
-import base_structures
+import common
 import util_widgets
 
 # import yfinance as yf
 from typing import OrderedDict
 from datetime import datetime
 
+#TODO: Move into cli.py as configurable on launch
 UPDATE_TIME_INTERVAL = 1
-UPDATE_STOCK_INTERVAL = 5
+UPDATE_STOCK_INTERVAL = 10
 
 
 class StockWidget(urwid.WidgetWrap):
@@ -298,7 +299,7 @@ class StonkApp(object):
 
         super().__init__()
 
-        self.portfolio = base_structures.Portfolio()
+        self.portfolio = common.Portfolio()
 
         self.w = StonkWidget(self.portfolio)
 

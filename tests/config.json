@@ -1,0 +1,70 @@
+{
+  "MSFT": {
+    "COMPANY_NAME": "Microsoft",
+    "STOCK_TICKER": "MSFT",
+    "REAL_TIME_PRICE": 123.13,
+    "PREVIOUS_CLOSE": 100.42,
+    "OPEN": 101.23,
+    "FIFTY_TWO_WEEK_RANGE": [
+      90.1,
+      200.12
+    ],
+    "VOLUME": 1003103010,
+    "AVERAGE_VOLUME": 901013010,
+    "MARKET_CAP": 1013010330,
+    "PE_RATIO": 23.32,
+    "EXCHANGE": "NYSE",
+    "LAST_UPDATED": "14/04/21 10:05:36"
+  },
+  "AAPL": {
+    "COMPANY_NAME": "Apple",
+    "STOCK_TICKER": "AAPL",
+    "REAL_TIME_PRICE": 123.13,
+    "PREVIOUS_CLOSE": 100.42,
+    "OPEN": 101.23,
+    "FIFTY_TWO_WEEK_RANGE": [
+      90.1,
+      200.12
+    ],
+    "VOLUME": 1003103010,
+    "AVERAGE_VOLUME": 901013010,
+    "MARKET_CAP": 1013010330,
+    "PE_RATIO": 23.32,
+    "EXCHANGE": "NYSE",
+    "LAST_UPDATED": "14/04/21 10:05:36"
+  },
+  "GME": {
+    "COMPANY_NAME": "Game Stop",
+    "STOCK_TICKER": "GME",
+    "REAL_TIME_PRICE": 123.13,
+    "PREVIOUS_CLOSE": 100.42,
+    "OPEN": 101.23,
+    "FIFTY_TWO_WEEK_RANGE": [
+      90.1,
+      200.12
+    ],
+    "VOLUME": 1003103010,
+    "AVERAGE_VOLUME": 901013010,
+    "MARKET_CAP": 1013010330,
+    "PE_RATIO": 23.32,
+    "EXCHANGE": "NYSE",
+    "LAST_UPDATED": "14/04/21 10:05:36"
+  },
+  "GOOG": {
+    "COMPANY_NAME": "Alphabet",
+    "STOCK_TICKER": "GOOG",
+    "REAL_TIME_PRICE": 123.13,
+    "PREVIOUS_CLOSE": 100.42,
+    "OPEN": 101.23,
+    "FIFTY_TWO_WEEK_RANGE": [
+      90.1,
+      200.12
+    ],
+    "VOLUME": 1003103010,
+    "AVERAGE_VOLUME": 901013010,
+    "MARKET_CAP": 1013010330,
+    "PE_RATIO": 23.32,
+    "EXCHANGE": "NYSE",
+    "LAST_UPDATED": "14/04/21 10:05:36"
+  }
+}
