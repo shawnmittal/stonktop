@@ -67,7 +67,7 @@ class Portfolio:
                     "REAL_TIME_PRICE": f'${self.data[ticker]["REAL_TIME_PRICE"]:>.2f}',
                     "PREVIOUS_CLOSE": f'${self.data[ticker]["PREVIOUS_CLOSE"]:>.2f}',
                     "OPEN": f'${self.data[ticker]["OPEN"]:>.2f}',
-                    "FIFTY_TWO_WEEK_RANGE": f'{self.data[ticker]["FIFTY_TWO_WEEK_RANGE"]:>.2f}',
+                    "FIFTY_TWO_WEEK_RANGE": f'{self.data[ticker]["FIFTY_TWO_WEEK_RANGE"]}',
                     "VOLUME": f'{self.data[ticker]["VOLUME"]}',
                     "AVERAGE_VOLUME": f'{self.data[ticker]["AVERAGE_VOLUME"]}',
                     "MARKET_CAP": f'${self.data[ticker]["MARKET_CAP"]}',

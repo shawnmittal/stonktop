@@ -18,17 +18,17 @@ class StockWidget(urwid.WidgetWrap):
 
     def __init__(self, stock):
         self.columns = OrderedDict()
-        self.columns["selected"] = urwid.Text("", wrap="ellipsis")
-        self.columns["name"] = urwid.Text("", wrap="ellipsis")
-        self.columns["ticker"] = urwid.Text("", wrap="ellipsis")
-        self.columns["current"] = urwid.Text("", wrap="ellipsis")
-        self.columns["prev_close"] = urwid.Text("", wrap="ellipsis")
-        self.columns["open"] = urwid.Text("", wrap="ellipsis")
-        self.columns["52_week_range"] = urwid.Text("", wrap="ellipsis")
-        self.columns["volume"] = urwid.Text("", wrap="ellipsis")
-        self.columns["avg_volume"] = urwid.Text("", wrap="ellipsis")
-        self.columns["market_cap"] = urwid.Text("", wrap="ellipsis")
-        self.columns["pe_ratio"] = urwid.Text("", wrap="ellipsis")
+        self.columns["selected"] = urwid.Text("", wrap="ellipsis", align='left')
+        self.columns["name"] = urwid.Text("", wrap="ellipsis", align='left')
+        self.columns["ticker"] = urwid.Text("", wrap="ellipsis", align='center')
+        self.columns["current"] = urwid.Text("", wrap="ellipsis", align='center')
+        self.columns["prev_close"] = urwid.Text("", wrap="ellipsis", align='center')
+        self.columns["open"] = urwid.Text("", wrap="ellipsis", align='center')
+        self.columns["52_week_range"] = urwid.Text("", wrap="ellipsis", align='center')
+        self.columns["volume"] = urwid.Text("", wrap="ellipsis", align='center')
+        self.columns["avg_volume"] = urwid.Text("", wrap="ellipsis", align='center')
+        self.columns["market_cap"] = urwid.Text("", wrap="ellipsis", align='center')
+        self.columns["pe_ratio"] = urwid.Text("", wrap="ellipsis", align='center')
         self.columns["state"] = urwid.AttrMap(urwid.Text("", wrap="ellipsis"), None)
 
         self.update_values(stock)
@@ -109,7 +109,7 @@ class PortfolioListWidget(urwid.WidgetWrap):
         (11,),
         (13,),
         (16,),
-        (9,),
+        (10,),
         (5,),
     ]
 
@@ -133,7 +133,7 @@ class PortfolioListWidget(urwid.WidgetWrap):
         header_w = [
             (
                 *weight,
-                urwid.Padding(urwid.Text(c, wrap="ellipsis")),
+                urwid.Padding(urwid.Text(c, wrap="ellipsis", align='center')),
             )
             for c, weight in zip(column_labels, self.column_widths)
         ]
