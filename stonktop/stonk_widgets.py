@@ -1,7 +1,6 @@
 import urwid
-import sys
-import common
-import util_widgets
+from stonktop import common
+from stonktop import util_widgets
 
 # import yfinance as yf
 from typing import OrderedDict

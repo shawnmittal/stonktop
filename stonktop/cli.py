@@ -1,4 +1,4 @@
-import stonk_widgets
+from stonktop import stonk_widgets
 
 
 def cli():

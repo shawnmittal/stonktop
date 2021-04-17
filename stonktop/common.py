@@ -3,7 +3,6 @@ import pytz
 import yfinance as yf
 from pathlib import Path
 from datetime import datetime
-from random import randint
 
 
 class Stock:
