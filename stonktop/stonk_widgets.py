@@ -1,8 +1,6 @@
 import urwid
 from stonktop import common
 from stonktop import util_widgets
-
-# import yfinance as yf
 from typing import OrderedDict
 from datetime import datetime
 
@@ -307,6 +305,8 @@ class StonkApp:
         self.w.refresh_stocks()
         self.register_time_refresh()
         self.register_stock_refresh()
+        # FIXME: Super hacky way to set focus on startup to first stock. I don't like this.
+        self.w.portfolio_view.view.panel.walker.set_focus(0)
         self.loop.run()
 
     def exit_on_q(self, key):

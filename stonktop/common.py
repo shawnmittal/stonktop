@@ -24,14 +24,14 @@ class Stock:
 
 
 class Portfolio:
-    def __init__(self, config_path=Path.cwd().parent / "tests/config.json"):
-        self.config_path = config_path
+    def __init__(self, data_path=Path("./data.json")):
+        self.data_path = config_path
         self.data = self._read_config()
         self.tickers = self.data.keys()
         self.stocks = self._get_stocks()
 
     def _read_config(self):
-        with open(self.config_path, "r") as fp:
+        with open(self.data_path, "r") as fp:
             data = json.load(fp)
 
         return data
