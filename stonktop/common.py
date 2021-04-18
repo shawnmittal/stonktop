@@ -25,12 +25,12 @@ class Stock:
 
 class Portfolio:
     def __init__(self, data_path=Path("./data.json")):
-        self.data_path = config_path
-        self.data = self._read_config()
+        self.data_path = data_path
+        self.data = self._read_data()
         self.tickers = self.data.keys()
         self.stocks = self._get_stocks()
 
-    def _read_config(self):
+    def _read_data(self):
         with open(self.data_path, "r") as fp:
             data = json.load(fp)
 
