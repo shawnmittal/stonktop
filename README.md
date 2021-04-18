@@ -18,6 +18,7 @@ Sample `data.json` file located in `./tests`.
 ## To Do:
 - ~~Add yfinance integration to pull down real stock data~~
 - ~~Add portfolio data.json file to maintain persistance~~
+- De-couple data download from terminal application update
 - Add pop-up that allows adding tickers
 - Add ability to delete stocks
 - Add ability to sort by columns
