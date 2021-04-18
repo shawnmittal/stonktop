@@ -182,12 +182,9 @@ class PortfolioViewWidget(urwid.WidgetWrap):
 class PortfolioView:
     def __init__(self, portfolio):
         self.portfolio = portfolio
-
         self.view = PortfolioViewWidget()
         self.panel = self.view.panel
-
         self.view_placeholder = urwid.WidgetPlaceholder(self.view)
-
         self.stock_widgets_dict = {}
 
         urwid.connect_signal(self.panel, "focus_changed", self.on_stocks_focus_changed)
@@ -195,10 +192,7 @@ class PortfolioView:
     def on_stocks_focus_changed(self):
         stock = self.get_focus_stock()
 
-        if stock is None:
-            return
-        else:
-            return
+        return
 
     def create_stock_widgets(self, stocks):
         if len(stocks) == 0:
@@ -235,6 +229,21 @@ class PortfolioView:
 
     def get_view(self):
         return self.view_placeholder
+
+    def show_popup(self, w):
+        overlay = urwid.Overlay(
+            urwid.Filler(w, valign="top"),
+            self.view,
+            align="center",
+            width=("relative", 30),
+            valign="middle",
+            height=("relative", 30),
+        )
+
+        self.view_placeholder.original_widget = overlay
+
+    def close_popup(self, *args, **kwargs):
+        self.view_placeholder.original_widget = self.view
 
 
 # TODO: should probably rename this to avoid confusion with StockWidget
